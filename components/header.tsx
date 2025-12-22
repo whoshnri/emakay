@@ -16,11 +16,11 @@ export function Header() {
         </Link>
 
         <nav className="flex items-center gap-8">
-          <Link href="/" className="text-sm font-medium hover:text-muted-foreground transition-colors">
-            Work
+          <Link href="/schoolwork" className="text-sm font-medium hover:text-muted-foreground transition-colors">
+            Schoolwork
           </Link>
-          <Link href="/merch" className="text-sm font-medium hover:text-muted-foreground transition-colors">
-            Merch
+          <Link href="/brain-dump" className="text-sm font-medium hover:text-muted-foreground transition-colors">
+            Brain Dump
           </Link>
           <Link href="/about" className="text-sm font-medium hover:text-muted-foreground transition-colors">
             About

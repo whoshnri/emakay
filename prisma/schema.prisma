@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model SchoolWork {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  coverImage  String
+  gallery     String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BrainDump {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  coverImage  String
+  gallery     String[]
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SiteSettings {
+  id              String @id @default("singleton")
+  adminUsername   String
+  adminPassword   String
+  aboutImage      String
+  contactEmail    String
+  seoTitle        String
+  seoDescription String
+}
