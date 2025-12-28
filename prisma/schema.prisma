@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output = "../app/generated/prisma/client"
 }
 
 datasource db {
@@ -29,10 +30,26 @@ model BrainDump {
 
 model SiteSettings {
   id              String @id @default("singleton")
-  adminUsername   String
-  adminPassword   String
   aboutImage      String
+  aboutText       String   @default("I am a fashion designer dedicated to creating architecture for the body...")
   contactEmail    String
+  phoneNumber     String   @default("+1 234 567 890")
+  footerText      String   @default("EMAKAY STUDIO © EST. 2024")
   seoTitle        String
-  seoDescription String
+  seoDescription  String
+}
+
+model SocialLink {
+  id    String @id @default(cuid())
+  label String
+  url   String
+}
+
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

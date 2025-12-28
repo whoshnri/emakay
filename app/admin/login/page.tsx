@@ -1,59 +1,29 @@
-"use client";
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { LoginForm } from "./login-form"
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const router = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-
-    const res = await fetch('/api/admin/auth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (res.ok) {
-      router.push('/admin');
-    } else {
-      const { message } = await res.json();
-      setError(message);
-    }
-  };
-
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow-md">
-        <h1 className="text-xl font-bold mb-4">Admin Login</h1>
-        <div className="mb-4">
-          <label className="block mb-1">Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-2 py-1 border rounded"
-          />
+    <div className="min-h-screen bg-background text-foreground">
+      <Header />
+
+      <main className="flex items-center justify-center min-h-[calc(100vh-200px)] px-6 pt-24">
+        <div className="max-w-md w-full">
+          <header className="text-center mb-12 space-y-4">
+            <div className="text-[10px] uppercase tracking-[0.5em] font-black text-muted-foreground italic">Security Protocol</div>
+            <h1 className="font-serif text-5xl font-black italic uppercase tracking-tighter">Authorized Access</h1>
+          </header>
+
+          <LoginForm />
+
+          <div className="mt-12 text-center text-[10px] uppercase tracking-[0.3em] font-black opacity-30">
+            EMAKAY STUDIO © EST. 2024
+          </div>
         </div>
-        <div className="mb-4">
-          <label className="block mb-1">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-2 py-1 border rounded"
-          />
-        </div>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">
-          Login
-        </button>
-      </form>
+      </main>
+
+      <Footer />
     </div>
-  );
+  )
 }
+

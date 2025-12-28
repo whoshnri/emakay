@@ -1,60 +1,53 @@
-// Mock data until the database is connected
-const mockSiteSettings = {
-  aboutImage: '/fashion-designer-portrait.png',
-  contactEmail: 'xyz@gmail.com',
-  // You would also have social media links and a bio field
-};
-
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import prisma from "@/lib/prisma.engine"
 
-export default function AboutPage() {
-  const bio = `
-    <p>
-      I am a fashion designer dedicated to creating timeless pieces that embody minimalist elegance and
-      sustainable craftsmanship. My work focuses on clean lines, premium materials, and thoughtful
-      construction.
-    </p>
-    <p>
-      Each piece is designed with intention, prioritizing quality over quantity. I believe in slow
-      fashion—creating garments that transcend seasonal trends and become cherished wardrobe staples.
-    </p>
-    <p>
-      My design philosophy centers on the intersection of form and function, where every detail serves a
-      purpose. From ethically sourced materials to meticulous attention to fit, each creation reflects a
-      commitment to excellence.
-    </p>
-  `;
+export default async function AboutPage() {
+  const settings = await prisma.siteSettings.findUnique({
+    where: { id: 'singleton' }
+  })
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Header />
-      <main className="pt-24 pb-12">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            <div>
-              <h1 className="font-serif text-4xl font-bold mb-8">About</h1>
-              {/*
-                NOTE: Using dangerouslySetInnerHTML is a potential security risk.
-                When this content becomes dynamic, it should be sanitized or, preferably,
-                rendered from a format like Markdown that can be safely converted to HTML.
-              */}
-              <div className="space-y-6 text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: bio }} />
-              <div className="mt-8">
-                <h2 className="text-xl font-bold mb-4">Contact</h2>
-                <a href={`mailto:${mockSiteSettings.contactEmail}`} className="text-blue-500 hover:underline">
-                  {mockSiteSettings.contactEmail}
-                </a>
-                {/* Add social media links here */}
+      <main className="pt-32 pb-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-12 gap-24 items-start">
+            <div className="md:col-span-7 space-y-12">
+              <h1 className="font-serif text-6xl md:text-8xl font-black italic uppercase tracking-tighter leading-[0.8]">
+                Ema Kay
+              </h1>
+
+              <div className="space-y-8 text-sm md:text-base uppercase tracking-widest leading-loose font-medium opacity-80 whitespace-pre-wrap">
+                {settings?.aboutText || "I am a fashion designer dedicated to creating architecture for the body. Based on the intersection of minimalist elegance and sustainable craftsmanship, my practice revolves around the dialogue between form and textile."}
+              </div>
+
+
+              <div className="pt-24 border-t border-border/30">
+                <h2 className="text-[10px] uppercase tracking-[0.5em] font-black mb-8 opacity-30 text-muted-foreground italic">Studio Contact</h2>
+                <div className="space-y-4">
+                  <a
+                    href={`mailto:${settings?.contactEmail || 'studio@emakay.com'}`}
+                    className="block font-serif text-3xl font-bold italic hover:opacity-50 transition-opacity"
+                  >
+                    {settings?.contactEmail || 'studio@emakay.com'}
+                  </a>
+                  <p className="text-[10px] uppercase tracking-[0.2em] font-black opacity-50">Global Inquiries & Curation</p>
+                </div>
               </div>
             </div>
 
-            <div className="aspect-[3/4] bg-muted">
-              <img src={mockSiteSettings.aboutImage} alt="Designer portrait" className="w-full h-full object-cover" />
+            <div className="md:col-span-5 aspect-3/4 bg-muted border border-border/50 overflow-hidden group">
+              <img
+                src={settings?.aboutImage || "/placeholder.svg"}
+                alt="Designer portrait"
+                className="w-full h-full object-cover transition-transform duration-2000 group-hover:scale-110 grayscale"
+              />
             </div>
           </div>
         </div>
       </main>
+      <Footer />
     </div>
-  );
+  )
 }

@@ -1,8 +1,12 @@
-export default function BrainDumpAdminPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold">Manage Brain Dump</h1>
-      <p>This is where you will manage your brain dump entries.</p>
-    </div>
-  );
+import prisma from "@/lib/prisma.engine"
+import { JournalManager } from "./journal-manager-client"
+
+export default async function BrainDumpAdminPage() {
+  const posts = await prisma.brainDump.findMany({
+    orderBy: { createdAt: "desc" }
+  })
+
+  return <JournalManager initialPosts={posts} />
 }
+
+

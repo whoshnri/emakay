@@ -1,60 +1,37 @@
-// app/schoolwork/page.tsx
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import prisma from "@/lib/prisma.engine"
+import { SchoolworkClient } from "./schoolwork-client"
 
-// Mock data until the database is connected
-const mockSchoolwork = [
-  {
-    id: '1',
-    title: 'Project Alpha',
-    description: 'A deep dive into avant-garde fashion concepts.',
-    coverImage: 'https://via.placeholder.com/300x200',
-    gallery: [],
-    school: 'Fashion Institute of Technology',
-    course: 'Advanced Design',
-    year: '2023',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: '2',
-    title: 'Collection Beta',
-    description: 'Exploring sustainable materials in modern apparel.',
-    coverImage: 'https://via.placeholder.com/300x200',
-    gallery: [],
-    school: 'Parsons School of Design',
-    course: 'Sustainable Fashion',
-    year: '2022',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+export default async function SchoolworkPage() {
+  const works = await prisma.schoolWork.findMany({
+    orderBy: { createdAt: 'desc' }
+  })
 
-export default function SchoolworkPage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
-      <main className="pt-24 pb-12">
+      <main className="pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-4xl font-bold font-serif mb-12">Schoolwork</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mockSchoolwork.map((item) => (
-              <div key={item.id} className="border rounded-lg overflow-hidden">
-                <img src={item.coverImage} alt={item.title} className="w-full h-48 object-cover" />
-                <div className="p-4">
-                  <h2 className="text-xl font-bold">{item.title}</h2>
-                  <p className="text-muted-foreground mt-2">{item.description}</p>
-                  <div className="text-sm text-gray-500 mt-4">
-                    <p>{item.school}</p>
-                    <p>{item.course} - {item.year}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <header className="mb-24 flex flex-col md:flex-row justify-between items-end gap-8 border-b border-border pb-12">
+            <div className="space-y-4">
+              <h1 className="font-serif text-5xl md:text-7xl font-black italic uppercase tracking-tighter">
+                Schoolwork
+              </h1>
+              <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-muted-foreground">
+                Selected Academic & Professional Projects
+              </p>
+            </div>
+            <div className="text-[10px] uppercase tracking-[0.2em] font-black opacity-30">
+              Total items: {works.length}
+            </div>
+          </header>
+
+          <SchoolworkClient works={works} />
         </div>
       </main>
       <Footer />
     </div>
-  );
+  )
 }
+

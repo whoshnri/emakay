@@ -10,32 +10,22 @@ export function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-sm border-b border-border">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="font-serif text-xl font-bold tracking-tight">
-          EMAKAY
+      <div className="max-w-7xl mx-auto px-0 md:px-6 py-4 flex-col flex md:flex-row gap-2 md:gap-0 items-center justify-between">
+        <Link href="/" className="font-serif text-2xl font-black tracking-tighter uppercase italic">
+          EMA KAY
         </Link>
 
-        <nav className="flex items-center gap-8">
-          <Link href="/schoolwork" className="text-sm font-medium hover:text-muted-foreground transition-colors">
+        <nav className="flex items-center px-6 gap-12 pt-3 md:pt-0 border-t md:border-none">
+          <Link href="/schoolwork" className="text-xs uppercase tracking-widest font-bold hover:text-muted-foreground transition-all duration-300">
             Schoolwork
           </Link>
-          <Link href="/brain-dump" className="text-sm font-medium hover:text-muted-foreground transition-colors">
+          <Link href="/brain-dump" className="text-xs uppercase tracking-widest font-bold hover:text-muted-foreground transition-all duration-300">
             Brain Dump
           </Link>
-          <Link href="/about" className="text-sm font-medium hover:text-muted-foreground transition-colors">
+          <Link href="/about" className="text-xs uppercase tracking-widest font-bold hover:text-muted-foreground transition-all duration-300">
             About
           </Link>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="w-9 h-9 p-0"
-          >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
         </nav>
       </div>
     </header>
